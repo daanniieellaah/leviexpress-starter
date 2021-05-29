@@ -3,7 +3,7 @@ import mapImage from './img/map.svg';
 import './style.css';
 
 
-const CityOption = ({cities}) => {
+const CityOptions = ({cities}) => {
 
   return (
     <>
@@ -15,6 +15,18 @@ const CityOption = ({cities}) => {
     </>
   );
 };
+
+const DateOptions = ({dates}) => {
+  return (
+    <>
+    <option value="">Vyberte</option>
+      {
+        dates.map(item => <option key={item.dateBasic} value={item.dateBasic}>{item.dateExtended}</option>)
+      }
+    </>
+  );
+};
+
 
 export const JourneyPicker = ({ onJourneyChange }) => {
   const handleSubmit = (event) => {
@@ -43,10 +55,18 @@ const handleDateChange = ({target}) => {
 
 const  [cities, setCities] = useState ([]);
 
+const [dates, setDates] = useState([]);
+
 useEffect (() => {
   fetch ('https://leviexpress-backend.herokuapp.com/api/cities')
   .then(result => result.json())
   .then(json => setCities(json.data));
+}, []);
+
+useEffect(() => {
+  fetch('https://leviexpress-backend.herokuapp.com/api/dates')
+    .then(result => result.json())
+    .then(json => setDates(json.data));
 }, []);
 
 return (
@@ -57,7 +77,7 @@ return (
         <label>
           <div className="journey-picker__label">Odkud:</div>
           <select value = {fromCity} onChange = {handleFromCityChange}>
-            <CityOption cities = {cities}/>
+            <CityOptions cities = {cities}/>
           </select>
         </label>
         <label>
@@ -69,12 +89,7 @@ return (
         <label>
           <div className="journey-picker__label">Datum:</div>
           <select value = {Date} onChange = {handleDateChange}>
-            <option value="">Vyberte</option>
-            <option value="datum01">Datum 01</option>
-            <option value="datum02">Datum 02</option>
-            <option value="datum03">Datum 03</option>
-            <option value="datum04">Datum 04</option>
-            <option value="datum05">Datum 05</option>
+            <DateOptions dates = {dates} />
           </select>
         </label>
         <div className="journey-picker__controls">
