@@ -96,6 +96,7 @@ return (
           <button 
             className="btn" 
             type="submit"
+            disabled={fromCity !=='' && toCity !=='' && date !=='' ? false : true}
           > 
             Vyhledat spoj
           </button>
