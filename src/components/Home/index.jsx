@@ -11,9 +11,11 @@ export const Home = () => {
   <main>
     <JourneyPicker  onJourneyChange = {setJourney}/>
     {
-      journey !== null ? <JourneyDetail journey={journey} /> : <div></div>
+      journey !== null ? <SeatPicker
+      seats = {journey.seats}
+      journey = {journey.journeyId} /> : <div></div>
     }
-    <SeatPicker />
+    
   </main>
   );
 };
