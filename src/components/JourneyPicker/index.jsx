@@ -88,7 +88,7 @@ return (
         </label>
         <label>
           <div className="journey-picker__label">Datum:</div>
-          <select value = {Date} onChange = {handleDateChange}>
+          <select value = {date} onChange = {handleDateChange}>
             <DateOptions dates = {dates} />
           </select>
         </label>
