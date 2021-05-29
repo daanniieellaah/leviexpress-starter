@@ -2,6 +2,20 @@ import React, { useEffect, useState } from 'react';
 import mapImage from './img/map.svg';
 import './style.css';
 
+
+const CityOption = ({cities}) => {
+
+  return (
+    <>
+    <option value = "">Vyberte</option>
+    
+    {
+    cities.map (item => <option key = {item.code} value = {item.code}> {item.name} </option>)
+    }
+    </>
+  );
+};
+
 export const JourneyPicker = ({ onJourneyChange }) => {
   const handleSubmit = (event) => {
     event.preventDefault ();
@@ -27,6 +41,14 @@ const handleDateChange = ({target}) => {
   setDate (target.value);
 };
 
+const  [cities, setCities] = useState ([]);
+
+useEffect (() => {
+  fetch ('https://leviexpress-backend.herokuapp.com/api/cities')
+  .then(result => result.json())
+  .then(json => setCities(json.data));
+}, []);
+
 return (
   <div className="journey-picker container">
     <h2 className="journey-picker__head">Kam chcete jet?</h2>
@@ -35,23 +57,13 @@ return (
         <label>
           <div className="journey-picker__label">Odkud:</div>
           <select value = {fromCity} onChange = {handleFromCityChange}>
-            <option value="">Vyberte</option>
-            <option value="mesto01">Město 01</option>
-            <option value="mesto02">Město 02</option>
-            <option value="mesto03">Město 03</option>
-            <option value="mesto04">Město 04</option>
-            <option value="mesto05">Město 05</option>
+            <CityOption cities = {cities}/>
           </select>
         </label>
         <label>
           <div className="journey-picker__label">Kam:</div>
           <select value = {toCity} onChange = {handleToCityChange}>
-            <option value="">Vyberte</option>
-            <option value="mesto01">Město 01</option>
-            <option value="mesto02">Město 02</option>
-            <option value="mesto03">Město 03</option>
-            <option value="mesto04">Město 04</option>
-            <option value="mesto05">Město 05</option>
+          <CityOptions cities={cities}/> 
           </select>
         </label>
         <label>
