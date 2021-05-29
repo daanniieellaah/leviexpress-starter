@@ -1,12 +1,25 @@
 import React from 'react';
+import { BroweserRoute as Router, Switch, Route, Link } from 'react-router-dom';
 import { Footer } from '../Footer';
 import { Header } from '../Header';
 import { Home } from '../Home';
+import { Reservation } from '../Reservation'
 
 export const App = () => (
-  <>
+    <Router>
     <Header />
-    <Home />
+
+    <Switch>
+      <Route exact path = "/">
+      <Home />
+      </Route>
+    <Route path = "/reservation">
+      <Reservation />
+    </Route>
+    </Switch>
+    
     <Footer />
-  </>
+  </Router>
 );
+
+
